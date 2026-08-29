@@ -1,0 +1,317 @@
+@media (hover: none) and (pointer: coarse) {
+  .hud {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+    padding-inline: 8px;
+  }
+  .hud-location, .sector-legend, .proximity { display: none; }
+  .hud-desktop-resume { display: none !important; }
+  .hud-controls {
+    min-width: 0;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: visible;
+  }
+  .control-btn { flex: 0 0 auto; }
+  .hud-controls > #view-toggle,
+  .hud-controls > #work-link,
+  .hud-controls > #resume-link,
+  .hud-controls > #help-toggle { display: none; }
+  .hud-menu-toggle {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: grid;
+    align-content: center;
+    gap: 4px;
+    padding: 0 8px;
+    border: 1px solid var(--grid);
+    background: rgba(6,18,21,.72);
+    cursor: pointer;
+  }
+  .hud-mobile-resume {
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 9px;
+    border-color: rgba(183,255,74,.38);
+    color: var(--lime);
+  }
+  .hud-menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #86aaa6;
+    transition: transform .18s ease, opacity .18s ease, background .18s ease;
+  }
+  .hud-menu-toggle[aria-expanded="true"] { border-color: var(--lime); }
+  .hud-menu-toggle[aria-expanded="true"] span { background: var(--lime); }
+  .hud-menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  .hud-menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .hud-menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+  .hud-mobile-menu {
+    position: fixed;
+    z-index: 62;
+    top: calc(var(--hud-h) + 8px);
+    right: 8px;
+    width: min(250px, calc(100vw - 16px));
+    display: none;
+    padding: 5px;
+    border: 1px solid var(--grid);
+    background: rgba(5,15,18,.99);
+    box-shadow: 0 18px 46px rgba(0,0,0,.32);
+  }
+  .hud-mobile-menu.open { display: grid; gap: 4px; }
+  .hud-mobile-menu .control-btn {
+    width: 100%;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 12px;
+    text-align: left;
+  }
+  .mission-rail {
+    display: block;
+    width: min(390px, calc(100vw - 16px));
+    left: 8px;
+    bottom: 8px;
+    border: 1px solid var(--grid);
+  }
+  .minimap-dock { right: 8px; bottom: 8px; }
+  .minimap { width: min(440px, calc(100vw - 16px)); }
+  .mobile-map-select-wrap {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    margin: 0 8px 8px;
+    padding: 8px;
+    border: 1px solid var(--grid);
+    background: rgba(6,18,21,.68);
+  }
+  .mobile-map-select-wrap label { color: var(--lime); font: 7px var(--mono); white-space: nowrap; }
+  .mobile-map-select-wrap select {
+    min-width: 0;
+    width: 100%;
+    height: 34px;
+    border: 1px solid #31534f;
+    border-radius: 0;
+    background: #071217;
+    color: var(--text);
+    padding: 0 28px 0 9px;
+    font: 8px var(--mono);
+  }
+  /* Touch-first orb interaction keeps a larger transparent target. */
+  .node > .orb-hit-target,
+  .category-hub > .orb-hit-target {
+    inset: -38px;
+    pointer-events: auto;
+    touch-action: none;
+  }
+  .node.haia-moon-node > .orb-hit-target { inset: -42px; }
+  .node, .category-hub { touch-action: none; }
+  .detail-panel { padding: 55px 22px 70px; }
+  #panel-content > h2 { font-size: clamp(2.6rem, 10vw, 4.8rem); line-height: .98; margin-bottom: 24px; letter-spacing: -.05em; }
+  .panel-stats { grid-template-columns: 1fr 1fr; }
+  .system-bridge {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .system-bridge i {
+    transform: none;
+    writing-mode: horizontal-tb;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 8px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    line-height: 1.45;
+  }
+  .system-bridge i::before {
+    content: "↓";
+    display: block;
+    margin-bottom: 4px;
+    color: var(--muted);
+  }
+  .system-bridge i::after {
+    content: "↓";
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+  }
+  .architecture-panel { grid-template-columns: 1fr 1fr; }
+  .layer-inspector { padding: 8px; }
+  .layer-shell { height: calc(100vh - 75px); }
+  .physical-layer, .application-layer { padding: 34px 18px 78px; }
+  .layer-content { grid-template-columns: var(--split-x) minmax(0, 1fr); }
+  .layer-title { font-size: clamp(2.2rem, 8vw, 4rem); }
+  .layer-grid { grid-template-columns: 1fr; }
+  .layer-grid article { min-height: auto; }
+  .help-card { padding: 40px 20px; }
+  .help-grid { grid-template-columns: 1fr 1fr; }
+  .boot-meta { grid-template-columns: 1fr; gap: 6px; }
+  .ghost-action { display: inline-flex; align-items: center; justify-content: center; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .hud-left { gap: 5px; }
+  .hud-left .hud-mobile-resume {
+    min-height: 34px;
+    padding-inline: 9px;
+    border-color: rgba(183,255,74,.38);
+    color: var(--lime);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (max-width: 600px) {
+  .brand {
+    width: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0;
+  }
+  .brand b { font-size: 8px; }
+  .hud-controls { gap: 3px; }
+  .control-btn { padding: 8px 7px; font-size: 7.25px; }
+  .hud-theme-toggle { font-size: 7px; padding-inline: 7px; }
+  .mission-rail {
+    top: calc(var(--hud-h) + 6px);
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - var(--hud-h) - 68px);
+  }
+  .mission-buttons {
+    max-height: calc(100vh - var(--hud-h) - 190px);
+  }
+  .help-grid, .stack-list, .panel-stats { grid-template-columns: 1fr; }
+  #panel-content > h2 { font-size: clamp(2.35rem, 13vw, 4rem); line-height: 1; margin-bottom: 22px; }
+  .panel-lede { line-height: 1.7; }
+  .boot { padding: 20px; }
+  .boot h1 { font-size: clamp(7rem, 36vw, 11rem); }
+  .boot-actions { display: grid; grid-template-columns: 1fr; }
+  .primary-action, .resume-action, .ghost-action { width: 100%; justify-content: center; }
+  .resume-action, .ghost-action { margin-top: 0; }
+  .layer-footer span { display: none; }
+  .layer-footer { justify-content: center; }
+  .layer-divider span { display: none; }
+  .layer-divider { width: 34px; margin-left: -17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .noise { display: none; }
+}
+
+/* Touch-first navigation keeps the complete orbital world and adapts only
+   controls, hit areas, and foreground reading surfaces. */
+@media (hover: none) and (pointer: coarse) {
+  body.network-started .viewport {
+    display: block;
+    visibility: visible;
+  }
+  body.network-started .sector-legend,
+  body.network-started .proximity {
+    display: none !important;
+  }
+
+  /* Mobile uses the same mission directory as desktop. The shared
+     #missions-toggle/OverlayController opens this rail, so it must remain in
+     the render tree on coarse-pointer devices instead of being hidden by the
+     touch-layout rules. */
+  body.network-started .mission-rail {
+    display: block !important;
+    z-index: 205;
+  }
+  body.network-started .minimap-dock {
+    display: grid !important;
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .map-zoom-controls { width: 48px; }
+  .map-zoom-button { height: 44px; }
+  .map-zoom-fit { min-height: 46px; }
+  .minimap-toggle { width: 48px; height: 48px; }
+  .minimap {
+    width: min(440px, calc(100vw - 16px));
+    max-height: calc(100dvh - var(--hud-h) - 86px);
+    overflow: auto;
+  }
+  .hud-controls > #view-toggle { display: none; }
+  .hud-controls > #missions-toggle { display: inline-flex !important; }
+  .hud-prof-link { display: none !important; }
+
+  .hud { z-index: 210; }
+  .hud-controls > :not(#missions-toggle):not(.hud-menu-toggle) { display: none !important; }
+  .hud-menu-toggle { display: grid !important; }
+  .hud-left .hud-mobile-resume { display: inline-flex !important; }
+  .hud-controls > #missions-toggle {
+    display: inline-flex !important;
+    min-height: 34px;
+    padding-inline: 9px;
+    border-color: rgba(85, 221, 255, .34);
+  }
+  .hud-mobile-menu { z-index: 220; }
+
+  body.network-started .detail-panel {
+    z-index: 150;
+    inset: var(--hud-h) 0 0;
+    width: 100vw;
+    max-width: none;
+    border-left: 0;
+    background: #050f12;
+    padding: 54px 20px 82px;
+    overscroll-behavior: contain;
+  }
+}
+
+/* The live input mode changes the HUD and panel treatment, never the map. */
+html[data-navigation-mode="desktop"] body.network-started .viewport,
+html[data-navigation-mode="mobile"] body.network-started .viewport {
+  display: block !important;
+  visibility: visible !important;
+}
+html[data-navigation-mode="desktop"] .hud-mobile-menu,
+html[data-navigation-mode="desktop"] .hud-menu-toggle,
+html[data-navigation-mode="desktop"] .hud-mobile-resume {
+  display: none !important;
+}
+html[data-navigation-mode="desktop"] .hud-desktop-resume {
+  display: inline-flex !important;
+}
+
+/* Compact laptop/desktop layout. It may reduce secondary HUD information, but
+   it never replaces the constellation with the mobile mission directory. */
+@media (max-width: 900px) and (hover: hover) and (pointer: fine) {
+  .hud.pen-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    padding-inline: 7px;
+  }
+  .hud.pen-header .hud-left { gap: 5px; }
+  .hud.pen-header .hud-location { display: none; }
+  .hud.pen-header .pen-header-brand {
+    width: 30px;
+    overflow: hidden;
+    font-size: 0;
+  }
+  .hud.pen-header .pen-header-brand b { font-size: 8px; }
+  .hud.pen-header .hud-controls {
+    gap: 3px;
+    max-width: calc(100vw - 172px);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+  .hud.pen-header .hud-controls::-webkit-scrollbar { display: none; }
+  .hud.pen-header .pen-header-action,
+  .hud.pen-header .control-btn {
+    min-height: 32px;
+    padding: 7px 8px;
+    font-size: 7.25px;
+  }
+  .sector-legend { display: flex; }
+}

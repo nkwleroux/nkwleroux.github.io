@@ -1,0 +1,331 @@
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.preference-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.theme-switch {
+  position: relative;
+  width: 62px;
+  height: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  padding: 2px;
+  border: 1px solid var(--grid, var(--line));
+  border-radius: 999px;
+  background: rgba(5, 15, 18, .72);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.theme-option {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #789a95;
+  cursor: pointer;
+}
+
+.theme-option svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme-option.active { color: #07110d; }
+.theme-switch-thumb {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--lime, var(--accent-2));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--lime, var(--accent-2)) 34%, transparent);
+  transition: transform .16s ease-out, background .16s linear;
+}
+.theme-switch[data-active-theme="dark"] .theme-switch-thumb { transform: translateX(29px); }
+.theme-switch[data-active-theme="light"] .theme-switch-thumb { transform: translateX(0); }
+
+.language-control {
+  position: relative;
+  display: inline-grid;
+  align-items: center;
+  min-width: 46px;
+  height: 30px;
+}
+.language-control select {
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  border: 1px solid var(--grid, var(--line));
+  border-radius: 999px;
+  background: rgba(5,15,18,.72);
+  color: var(--text);
+  padding: 0 19px 0 9px;
+  font: 8px var(--mono, "JetBrains Mono", monospace);
+  letter-spacing: .06em;
+  cursor: pointer;
+}
+.language-control select option {
+  background: #071217;
+  color: #dceceb;
+}
+html[data-theme="light"] .language-control select option {
+  background: #f8fbf8;
+  color: #173a34;
+}
+
+.language-control > svg {
+  position: absolute;
+  right: 6px;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+html[data-theme="light"] .theme-switch,
+html[data-theme="light"] .language-control select {
+  background: rgba(255,255,255,.72);
+  border-color: var(--grid, var(--line));
+}
+html[data-theme="light"] .theme-option { color: #58766f; }
+html[data-theme="light"] .theme-option.active { color: #f8fbf7; }
+html[data-theme="light"] .theme-switch-thumb { background: #087f74; }
+
+
+[data-i18n] { font-style: normal; }
+
+@media (max-width: 600px) {
+  .preference-controls { gap: 4px; }
+  .theme-switch { width: 56px; height: 28px; }
+  .theme-switch-thumb { width: 24px; height: 22px; }
+  .theme-switch[data-active-theme="dark"] .theme-switch-thumb { transform: translateX(26px); }
+  .theme-option svg { width: 12px; height: 12px; }
+  .language-control { min-width: 42px; height: 28px; }
+  .language-control select { font-size: 7px; padding-left: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch-thumb { transition: none; }
+}
+
+
+/* Keep the current page visible while its main surfaces ease into the next
+   palette. Transform and layout properties are intentionally excluded so the
+   map, panels, and resume never shift or trigger a full-screen repaint. */
+html.theme-switching,
+html.theme-switching body,
+html.theme-switching .hud,
+html.theme-switching .pen-header,
+html.theme-switching .pen-header-action,
+html.theme-switching .control-btn,
+html.theme-switching .theme-switch,
+html.theme-switching .theme-switch-thumb,
+html.theme-switching .language-control select,
+html.theme-switching .map-zoom-button,
+html.theme-switching .map-zoom-fit,
+html.theme-switching .minimap-toggle,
+html.theme-switching .minimap,
+html.theme-switching .mission-rail,
+html.theme-switching .mission-button,
+html.theme-switching .detail-panel,
+html.theme-switching .panel-section,
+html.theme-switching .panel-stats > div,
+html.theme-switching .help-modal,
+html.theme-switching .help-card,
+html.theme-switching .contact-modal,
+html.theme-switching .contact-panel-card,
+html.theme-switching .layer-inspector,
+html.theme-switching .layer-shell,
+html.theme-switching .layer-scroll,
+html.theme-switching .layer-header,
+html.theme-switching .site-header,
+html.theme-switching .section,
+html.theme-switching .muted-section,
+html.theme-switching .systems-card,
+html.theme-switching .featured-mission-card,
+html.theme-switching .resume-publication-card,
+html.theme-switching .timeline-content,
+html.theme-switching .role-progression > div,
+html.theme-switching .project-main,
+html.theme-switching .project-side,
+html.theme-switching .skill-card,
+html.theme-switching .education-grid .panel-section,
+html.theme-switching .contact-card,
+html.theme-switching .contact-form-wrap,
+html.theme-switching .terminal-card,
+html.theme-switching .button,
+html.theme-switching .route-shell,
+html.theme-switching .route-section,
+html.theme-switching .route-meta > div,
+html.theme-switching .route-proof article {
+  transition-property: color, background-color, border-color, box-shadow, fill, stroke, opacity !important;
+  transition-duration: .62s !important;
+  transition-timing-function: ease !important;
+}
+
+html.theme-switching .theme-switch-thumb {
+  transition-property: transform, background-color, box-shadow !important;
+  transition-duration: .5s !important;
+  transition-timing-function: ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-switching,
+  html.theme-switching body,
+  html.theme-switching .hud,
+  html.theme-switching .pen-header,
+  html.theme-switching .pen-header-action,
+  html.theme-switching .control-btn,
+  html.theme-switching .theme-switch,
+  html.theme-switching .theme-switch-thumb,
+  html.theme-switching .language-control select,
+  html.theme-switching .mission-rail,
+  html.theme-switching .detail-panel,
+  html.theme-switching .site-header,
+  html.theme-switching .section,
+  html.theme-switching .route-shell {
+    transition: none !important;
+  }
+}
+
+/* persistent performance and accessibility modes */
+.pen-skip-links {
+  position: fixed;
+  z-index: 1000;
+  left: 10px;
+  top: 8px;
+  display: grid;
+  gap: 4px;
+  pointer-events: none;
+}
+.pen-skip-links a {
+  transform: translateY(-160%);
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  max-width: calc(100vw - 20px);
+  padding: 0 12px;
+  border: 2px solid #07110d;
+  background: var(--lime, #b7ff4a);
+  color: #07110d;
+  font: 800 9px var(--mono, monospace);
+  text-decoration: none;
+  pointer-events: auto;
+}
+.pen-skip-links a:focus { transform: translateY(0); }
+
+/* Motion reduction is handled by the JavaScript motion controller. Avoid a
+   universal duration override here: it can interfere with stateful surfaces
+   such as detail panels and dialogs. Keep CSS reduction targeted to decorative
+   motion only so interaction and visibility states remain deterministic. */
+html.performance-mode,
+html.accessibility-mode {
+  scroll-behavior: auto !important;
+}
+html.performance-mode .world,
+html.performance-mode .node,
+html.performance-mode .category-hub,
+html.performance-mode .mission-orbit-signal,
+html.performance-mode .constellation-field,
+html.performance-mode .map-nebula,
+html.performance-mode .celestial-ornaments,
+html.accessibility-mode .world,
+html.accessibility-mode .node,
+html.accessibility-mode .category-hub,
+html.accessibility-mode .mission-orbit-signal,
+html.accessibility-mode .constellation-field,
+html.accessibility-mode .map-nebula,
+html.accessibility-mode .celestial-ornaments {
+  animation: none !important;
+  transition: none !important;
+}
+html.performance-mode .noise,
+html.performance-mode .mission-orbit-signal,
+html.performance-mode .celestial-ornaments { display: none !important; }
+html.performance-mode .map-nebula { opacity: .3 !important; }
+html.performance-mode .constellation-field { opacity: .22 !important; }
+html.performance-mode .node,
+html.performance-mode .category-hub,
+html.performance-mode .packet-core { box-shadow: none !important; }
+
+html.accessibility-mode { font-size: 112.5%; }
+html.accessibility-mode body { letter-spacing: .005em; }
+html.accessibility-mode :focus-visible {
+  outline: 3px solid var(--lime, #b7ff4a) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(183, 255, 74, .16) !important;
+}
+html.accessibility-mode .control-btn,
+html.accessibility-mode .pen-header-action,
+html.accessibility-mode .hud-mobile-resume,
+html.accessibility-mode .map-zoom-button,
+html.accessibility-mode .map-zoom-fit,
+html.accessibility-mode .minimap-toggle { font-size: max(8px, .58rem); }
+html.accessibility-mode .muted,
+html.accessibility-mode [class*="muted"] { color: #a8c0bc; }
+html.accessibility-mode .node b,
+html.accessibility-mode .category-hub b { font-size: 9px; color: #f6fffd; }
+html.accessibility-mode .node small,
+html.accessibility-mode .category-hub small,
+html.accessibility-mode .node .orbit-label { color: #c1d3d0; }
+html.accessibility-mode.simplified-map-mode .noise,
+html.accessibility-mode.simplified-map-mode .mission-orbit,
+html.accessibility-mode.simplified-map-mode .mission-orbit-signal,
+html.accessibility-mode.simplified-map-mode .celestial-ornaments,
+html.accessibility-mode.simplified-map-mode .constellation-field,
+html.accessibility-mode.simplified-map-mode .map-nebula,
+html.accessibility-mode.simplified-map-mode .constellation-title { display: none !important; }
+html.accessibility-mode.simplified-map-mode .world-route,
+html.accessibility-mode.simplified-map-mode .route-path { opacity: .72 !important; stroke-dasharray: none !important; }
+html.accessibility-mode.simplified-map-mode .node,
+html.accessibility-mode.simplified-map-mode .category-hub { border-width: 2px !important; background: #071418 !important; }
+html.accessibility-mode.simplified-map-mode .node-category { background: #071418 !important; border-color: #5d827c !important; }
+
+html[data-theme="light"].accessibility-mode body { color: #0b2823; }
+html[data-theme="light"].accessibility-mode :focus-visible { outline-color: #006d62 !important; box-shadow: 0 0 0 6px rgba(0, 109, 98, .16) !important; }
+html[data-theme="light"].accessibility-mode .route-summary,
+html[data-theme="light"].accessibility-mode .route-section p,
+html[data-theme="light"].accessibility-mode .route-section li { color: #355e56; }
+
+/* reduced-motion mission directory remains a deterministic foreground panel. */
+html.performance-mode .mission-rail[aria-hidden="false"],
+html.accessibility-mode .mission-rail[aria-hidden="false"] {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+html.performance-mode .mission-rail[aria-hidden="true"],
+html.accessibility-mode .mission-rail[aria-hidden="true"] {
+  transform: translateX(-105%) !important;
+  pointer-events: none !important;
+}

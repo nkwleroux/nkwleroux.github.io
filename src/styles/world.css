@@ -1,0 +1,549 @@
+.viewport { position: fixed; z-index: 5; inset: var(--hud-h) 0 0; overflow: hidden; cursor: grab; touch-action: none; isolation: isolate; contain: layout paint style; background: radial-gradient(circle at 52% 48%, rgba(10,31,36,.28), transparent 54%), #040d10; }
+.viewport:focus, .viewport:focus-visible { outline: none; box-shadow: none; }
+.viewport.dragging { cursor: grabbing; }
+.world {
+  --bg: #050f12;
+  --bg-elevated: #07161a;
+  --panel: rgba(5, 15, 18, .93);
+  --text: #dceceb;
+  --muted: #71918d;
+  --grid: #234843;
+  --grid-soft: #132d2a;
+  --cyan: #5ef1e0;
+  --lime: #b7ff4a;
+  --physical: #5ef1e0;
+  --application: #7b8cff;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: var(--world-width);
+  height: var(--world-height);
+  transform-origin: 0 0;
+  will-change: auto;
+  contain: layout paint style;
+  backface-visibility: hidden;
+  transform-style: flat;
+  isolation: isolate;
+  background: radial-gradient(circle at 49% 50%, rgba(183,255,74,.045), transparent 22%);
+}
+
+/* The map-wide nebula is pre-rendered as one transparent WebP. This keeps the
+   visual depth while avoiding four full-map blur filters and blend layers. */
+.map-nebula {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: .78;
+  background: url("/nebula-map.webp") center / 100% 100% no-repeat;
+  contain: strict;
+}
+.world.constellation-field-calm .map-nebula { opacity: .48; }
+body:not(.network-started) .map-nebula { opacity: .44; }
+
+/* Static map-owned constellation. The entire SVG receives a single composited
+   brightness change on pointer enter; no mask follows the cursor and no star,
+   edge, or orbit is animated. */
+.constellation-field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: var(--world-width);
+  height: var(--world-height);
+  overflow: visible;
+  pointer-events: none;
+  opacity: .5;
+  transition: opacity .12s linear;
+  contain: layout paint style;
+}
+.world.constellation-hover-active:not(.constellation-field-calm) .constellation-field {
+  opacity: .72;
+}
+.world.constellation-field-calm .constellation-field { opacity: .28; }
+body:not(.network-started) .constellation-field { opacity: .3; }
+.constellation-edge { stroke: rgba(94,241,224,.12); stroke-width: 1.05; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.constellation-edge-major { stroke: rgba(183,255,74,.16); stroke-width: 1.3; stroke-dasharray: 8 13; }
+.constellation-star { fill: rgba(94,241,224,.56); }
+.constellation-star.tone-lime { fill: rgba(183,255,74,.64); }
+.constellation-star.tone-violet { fill: rgba(123,140,255,.58); }
+.constellation-system-ring { fill: none; stroke: rgba(94,241,224,.09); stroke-width: 1; stroke-dasharray: 3 12; vector-effect: non-scaling-stroke; }
+.constellation-system-ring.tone-lime { stroke: rgba(183,255,74,.1); }
+.constellation-system-ring.tone-violet { stroke: rgba(123,140,255,.1); }
+.sector { position: absolute; top: 0; bottom: 0; border: 0; }
+.sector span { position: sticky; top: 26px; margin-left: 25px; color: #2f5b56; font: 7px var(--mono); }
+.sector-physical { left: 0; width: 38%; background: radial-gradient(circle at 20% 45%, rgba(94,241,224,.035), transparent 32%); }
+.sector-interface { left: 38%; width: 27%; background: radial-gradient(circle at 50% 50%, rgba(183,255,74,.035), transparent 40%); }
+.sector-application { left: 65%; width: 35%; background: radial-gradient(circle at 70% 40%, rgba(123,140,255,.035), transparent 38%); }
+.links { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.route { fill: none; stroke: #28514d; stroke-width: 1.3; stroke-dasharray: 8 11; opacity: .55; transition: stroke .25s ease, opacity .25s ease, stroke-width .25s ease; }
+.route.active { stroke: var(--lime); stroke-width: 2; opacity: .95; filter: none; }
+.node { --size: 92px; position: absolute; z-index: 5; left: var(--node-x); top: var(--node-y); width: var(--size); height: var(--size); translate: -50% -50%; border: 1px solid #2c5e59; border-radius: 50%; background: rgba(5,17,20,.88); color: var(--text); cursor: pointer; text-align: center; display: grid; place-items: center; align-content: center; gap: 2px; opacity: .96; box-shadow: 0 0 0 12px rgba(94,241,224,.025), 0 0 40px rgba(0,0,0,.28); }
+.node:before { content: ""; position: absolute; inset: -18px; border: 1px dashed rgba(94,241,224,.12); border-radius: 50%; }
+.node i { position: absolute; width: 11px; height: 11px; border-radius: 50%; top: -6px; background: var(--cyan); box-shadow: 0 0 14px rgba(94,241,224,.8); }
+.node-index { position: absolute; left: -20px; top: 5px; color: #4f7772; font: 6px var(--mono); }
+.node b { max-width: 76px; font: 8px var(--mono); }
+.node small { max-width: 72px; color: #5f817d; font: 5.5px var(--mono); }
+.node .orbit-label { position: absolute; right: -35px; bottom: 7px; padding: 3px 5px; border: 1px solid #315c57; background: #071418; color: #789d98; font: 5px var(--mono); }
+.node .status-live { color: var(--lime); border-color: #4b7433; }
+.node .status-build { color: #ffd46d; border-color: #6b5931; }
+.node.bridge-node { border-color: var(--lime); box-shadow: 0 0 0 12px rgba(183,255,74,.025), 0 0 45px rgba(183,255,74,.06); }
+.node.bridge-node i { background: var(--lime); box-shadow: 0 0 15px rgba(183,255,74,.75); }
+.node.near { border-color: var(--lime); box-shadow: 0 0 0 16px rgba(183,255,74,.035), 0 0 34px rgba(183,255,74,.12); }
+.data-packet { position: absolute; z-index: 9; left: 0; top: 0; width: 38px; height: 38px; will-change: transform; contain: layout paint style; backface-visibility: hidden; transform-style: flat; translate: -50% -50%; display: grid; place-items: center; pointer-events: none; }
+.packet-core { width: 31px; height: 31px; display: grid; place-items: center; border: 1px solid var(--lime); border-radius: 6px; background: #071317; color: var(--lime); box-shadow: 0 0 20px rgba(183,255,74,.18); font: 7px var(--mono); transform: rotate(45deg); }
+.packet-core::first-line { transform: rotate(-45deg); }
+.packet-heading { position: absolute; top: 40px; color: #6e9691; font: 5px var(--mono); }
+.packet-trail { position: absolute; z-index: 3; left: 0; top: 0; width: 85px; will-change: transform; contain: layout paint style; backface-visibility: hidden; height: 1px; transform-origin: right center; background: linear-gradient(90deg, transparent, rgba(183,255,74,.55)); pointer-events: none; }
+.world.map-fit-view .packet-core { box-shadow: none; }
+.world.map-fit-view .packet-trail { opacity: .5; }
+.world.map-fit-view .node.near { box-shadow: 0 0 0 10px rgba(183,255,74,.025); }
+.constellation-title { position: absolute; z-index: 2; display: grid; gap: 4px; padding: 8px 10px; border-left: 1px solid rgba(94,241,224,.2); color: #3d6964; pointer-events: none; font: 6px var(--mono); letter-spacing: .08em; }
+.constellation-title b { color: #5a817c; font-size: 7px; }
+.constellation-title small { font: inherit; }
+
+/* Primary interaction hit-area rules. Keep the button itself as the only pointer target. */
+.node {
+  pointer-events: auto;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.node > * { pointer-events: none; }
+.node:hover,
+.node:focus-visible {
+  z-index: 12;
+  border-color: var(--lime);
+  box-shadow: 0 0 0 16px rgba(183,255,74,.04), 0 0 42px rgba(183,255,74,.18);
+}
+
+.node.group-professional { box-shadow: 0 0 0 12px rgba(94,241,224,.03), 0 0 44px rgba(94,241,224,.05); }
+.node.group-projects { border-style: double; }
+.node.group-academic .orbit-label { border-color: #405463; }
+.node.group-contact { border-color: var(--lime); }
+
+
+/* mission hierarchy + authored navigation boundary */
+.map-boundary {
+  position: absolute;
+  z-index: 1;
+  border: 0;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.constellation-title {
+  min-width: 150px;
+}
+.constellation-title b {
+  font-size: 8px;
+}
+.constellation-title small {
+  color: #496d68;
+  font-size: 6px;
+}
+
+.node.category-anchor {
+  --size: 126px;
+  z-index: 7;
+  border-width: 1.5px;
+  box-shadow:
+    0 0 0 17px rgba(94,241,224,.035),
+    0 0 54px rgba(94,241,224,.11);
+}
+.node.category-anchor:before {
+  inset: -24px;
+}
+.node.category-anchor b {
+  max-width: 102px;
+  font-size: 9px;
+  line-height: 1.25;
+}
+.node.category-anchor small {
+  max-width: 96px;
+  font-size: 6px;
+  line-height: 1.3;
+}
+.node.category-anchor .node-index {
+  left: -25px;
+  top: 8px;
+  font-size: 7px;
+}
+.node.category-anchor .orbit-label {
+  right: -42px;
+  bottom: 10px;
+  font-size: 5.5px;
+}
+.node-category {
+  position: absolute;
+  left: 50%;
+  top: -39px;
+  translate: -50% 0;
+  width: max-content;
+  max-width: 180px;
+  padding: 4px 7px;
+  border: 1px solid #315c57;
+  background: #071418;
+  color: var(--cyan);
+  font: 5.5px var(--mono);
+  letter-spacing: .065em;
+  text-transform: uppercase;
+}
+.node.single-category-node {
+  --size: 144px;
+}
+.node.single-category-node b {
+  max-width: 116px;
+  font-size: 8.5px;
+  line-height: 1.28;
+}
+.node.single-category-node small {
+  max-width: 106px;
+}
+.node.single-category-node.group-contact {
+  z-index: 14;
+  isolation: isolate;
+  border-color: var(--lime);
+  box-shadow:
+    0 0 0 18px rgba(183,255,74,.04),
+    0 0 64px rgba(183,255,74,.12);
+}
+
+/* COMMS is the final destination near the map edge. Its transparent target is
+   deliberately larger than the visible orb and counter-scales at distant map
+   zoom levels, so it remains directly clickable with a mouse or finger. */
+.node.priority-destination-node > .orb-hit-target {
+  inset: -44px;
+  transform: scale(var(--contact-hit-scale, 1));
+  transform-origin: center;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .node.category-anchor {
+    --size: 118px;
+  }
+  .node.single-category-node {
+    --size: 132px;
+  }
+}
+
+
+/* hub-and-spoke category constellations */
+.category-hub {
+  --hub-size: 172px;
+  position: absolute;
+  z-index: 8;
+  left: var(--hub-x);
+  top: var(--hub-y);
+  width: var(--hub-size);
+  height: var(--hub-size);
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 7px;
+  border: 1.5px solid var(--lime);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(183,255,74,.08), transparent 48%),
+    rgba(5,17,20,.96);
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+  box-shadow:
+    0 0 0 20px rgba(183,255,74,.035),
+    0 0 70px rgba(183,255,74,.12);
+  touch-action: manipulation;
+}
+.category-hub::before {
+  content: "";
+  position: absolute;
+  inset: -28px;
+  border: 1px dashed rgba(183,255,74,.2);
+  border-radius: 50%;
+}
+.category-hub::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(94,241,224,.09);
+  border-radius: 50%;
+}
+.category-hub > * {
+  pointer-events: none;
+}
+.category-hub i {
+  position: absolute;
+  top: -7px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 18px rgba(183,255,74,.9);
+}
+.category-hub-kicker {
+  color: #608b84;
+  font: 6px var(--mono);
+  letter-spacing: .09em;
+}
+.category-hub b {
+  max-width: 132px;
+  color: var(--lime);
+  font: 10px/1.3 var(--mono);
+  letter-spacing: .03em;
+}
+.category-hub small {
+  color: #789e98;
+  font: 6.5px var(--mono);
+}
+.category-hub:hover,
+.category-hub:focus-visible {
+  z-index: 14;
+  outline: none;
+  border-color: #d9ff7b;
+  box-shadow:
+    0 0 0 24px rgba(183,255,74,.055),
+    0 0 90px rgba(183,255,74,.22);
+}
+
+.mission-orbit {
+  position: absolute;
+  z-index: 2;
+  left: var(--orbit-parent-x);
+  top: var(--orbit-parent-y);
+  width: var(--orbit-width);
+  height: var(--orbit-height);
+  translate: -50% -50%;
+  rotate: var(--orbit-angle);
+  overflow: visible;
+  border: 1px dashed rgba(94,241,224,.14);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .72;
+  transform-origin: center;
+}
+/* Orbit tracks remain fully static. A single requestAnimationFrame loop moves
+   all small markers with compositor-only transforms. */
+.mission-orbit-signal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 3px rgba(94,241,224,.42);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: layout paint style;
+  backface-visibility: hidden;
+}
+.mission-orbit.orbit-style-0 { border-color: rgba(94,241,224,.14); border-style: dashed; }
+.mission-orbit.orbit-style-1 { border-color: rgba(183,255,74,.15); border-style: dotted; }
+.mission-orbit.orbit-style-1 .mission-orbit-signal,
+.mission-orbit.orbit-style-3 .mission-orbit-signal { background: var(--lime); box-shadow: 0 0 3px rgba(183,255,74,.4); }
+.mission-orbit.orbit-style-2 { border-color: rgba(94,241,224,.19); border-style: dotted; }
+.mission-orbit.orbit-style-3 { border-color: rgba(183,255,74,.12); border-style: dashed; }
+.mission-orbit-self { z-index: 3; border-width: 1.2px; opacity: .82; }
+html.ambient-motion-calm .mission-orbit,
+body.panel-reading .mission-orbit { opacity: .36; }
+@media (prefers-reduced-motion: reduce) {
+  .mission-orbit-signal { transform: translate3d(0, -40px, 0) !important; }
+}
+
+.node.category-satellite {
+  --size: 88px;
+  z-index: 6;
+  border-color: #315e59;
+  box-shadow:
+    0 0 0 10px rgba(94,241,224,.02),
+    0 0 30px rgba(0,0,0,.26);
+}
+.node.category-satellite:before {
+  inset: -14px;
+}
+.node.category-satellite b {
+  max-width: 74px;
+  font-size: 7.5px;
+}
+.node.category-satellite small {
+  max-width: 70px;
+  font-size: 5.3px;
+}
+
+/* Professional Career is the hub; Haia/Axians are company satellites. */
+.node.career-company-node {
+  --size: 92px;
+  z-index: 7;
+  border-color: rgba(94,241,224,.72);
+  box-shadow:
+    0 0 0 11px rgba(94,241,224,.025),
+    0 0 34px rgba(94,241,224,.08);
+}
+.node.career-company-node b { max-width: 78px; font-size: 7.8px; }
+.node.career-company-node small { max-width: 76px; font-size: 5.2px; }
+
+/* ILAC and IFSF Bulletins remain deliberately smaller moon-orbs around Haia. */
+.node.haia-moon-node {
+  --size: 64px;
+  z-index: 8;
+  border-color: rgba(94,241,224,.56);
+  background: rgba(5,16,19,.97);
+  box-shadow:
+    0 0 0 7px rgba(94,241,224,.018),
+    0 0 22px rgba(94,241,224,.08);
+}
+.node.haia-moon-node:before { inset: -9px; }
+.node.haia-moon-node .node-index { font-size: 5px; }
+.node.haia-moon-node b { max-width: 54px; font-size: 5.8px; line-height: 1.18; }
+.node.haia-moon-node small { display: none; }
+.node.haia-moon-node .orbit-label { right: -32px; bottom: -8px; font-size: 4.6px; }
+
+.node.merged-category-hub-node {
+  --size: 156px;
+  z-index: 9;
+  border-color: var(--lime);
+  box-shadow:
+    0 0 0 20px rgba(183,255,74,.04),
+    0 0 72px rgba(183,255,74,.14);
+}
+.node.merged-category-hub-node:before { inset: -26px; }
+.node.merged-category-hub-node b { max-width: 124px; font-size: 9px; line-height: 1.25; }
+.node.merged-category-hub-node small { max-width: 116px; font-size: 6px; }
+
+.viewport.dragging .map-boundary {
+  opacity: 0;
+}
+
+/* Single-mission categories are both category hub and mission orb. */
+.node.category-hub-node {
+  --size: 154px;
+  z-index: 8;
+  border-width: 1.5px;
+  border-color: var(--lime);
+  box-shadow:
+    0 0 0 20px rgba(183,255,74,.04),
+    0 0 70px rgba(183,255,74,.13);
+}
+.node.category-hub-node:before {
+  inset: -27px;
+  border-color: rgba(183,255,74,.2);
+}
+.node.category-hub-node b {
+  max-width: 122px;
+  font-size: 8.5px;
+  line-height: 1.28;
+}
+
+/* Main network routes are exclusively category-hub to category-hub. */
+.route.category-route {
+  stroke-width: 1.6;
+  stroke-dasharray: 10 12;
+}
+.route.category-route.active {
+  stroke-width: 2.2;
+}
+
+/* Category-anchor styling for standalone hubs. */
+.node.category-anchor {
+  --size: 92px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .category-hub {
+    --hub-size: 156px;
+  }
+  .node.category-hub-node {
+    --size: 144px;
+  }
+}
+
+
+/* mission directory → map correspondence */
+.node.mission-rail-hover {
+  z-index: 16;
+  border-color: #8dfff2 !important;
+  background: rgba(8,28,31,.98);
+  box-shadow:
+    0 0 0 16px rgba(94,241,224,.06),
+    0 0 42px rgba(94,241,224,.28) !important;
+}
+.node.mission-rail-hover::before {
+  border-color: rgba(94,241,224,.36);
+}
+.node.mission-rail-hover i {
+  background: #8dfff2;
+  box-shadow: 0 0 18px rgba(94,241,224,.95);
+}
+html[data-world-view="timeline"] .node.mission-rail-hover {
+  border-color: #8dfff2 !important;
+  box-shadow:
+    0 0 0 12px rgba(94,241,224,.06),
+    0 0 38px rgba(94,241,224,.32) !important;
+}
+
+/* reliable direct-click hit areas for every mission and category orb. */
+.node > .orb-hit-target,
+.category-hub > .orb-hit-target {
+  position: absolute;
+  z-index: 20;
+  inset: -24px;
+  display: block;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: auto;
+}
+.node.haia-moon-node > .orb-hit-target {
+  inset: -28px;
+}
+.node:hover > .orb-hit-target,
+.node:focus-visible > .orb-hit-target,
+.category-hub:hover > .orb-hit-target,
+.category-hub:focus-visible > .orb-hit-target {
+  cursor: pointer;
+}
+
+/* reading state: content takes visual priority over ambient network motion. */
+body.panel-reading .world { opacity: .58; transition: opacity .18s linear; }
+body.panel-reading .node i,
+body.panel-reading .category-hub i { opacity: .18 !important; }
+body.panel-reading .route:not(.active) { opacity: .12; }
+
+/* Static celestial details occupy the map margins without adding another
+   technical diagram or any continuous animation. */
+.celestial-ornaments {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: var(--world-width);
+  height: var(--world-height);
+  overflow: visible;
+  pointer-events: none;
+  opacity: .52;
+  contain: layout paint style;
+}
+.celestial-system { color: rgba(94,241,224,.34); }
+.celestial-system.tone-lime { color: rgba(183,255,74,.28); }
+.celestial-system.tone-violet { color: rgba(123,140,255,.3); }
+.celestial-halo {
+  fill: currentColor;
+  opacity: .035;
+}
+.celestial-ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 2 12;
+  opacity: .42;
+  vector-effect: non-scaling-stroke;
+}
+.celestial-ring.secondary { opacity: .25; stroke-dasharray: 1 16; }
+.celestial-core { fill: currentColor; opacity: .52; }
+.celestial-body { fill: currentColor; opacity: .64; }
+.celestial-body.minor { opacity: .4; }
+.celestial-dust { fill: rgba(94,241,224,.5); opacity: .5; }
+html.ambient-motion-calm .celestial-ornaments,
+body.panel-reading .celestial-ornaments { opacity: .3; }
+

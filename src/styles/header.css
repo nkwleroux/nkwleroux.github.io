@@ -1,0 +1,126 @@
+/* Shared PEN header language for the Network and Resume views. */
+.pen-header {
+  height: 58px;
+  border-bottom: 1px solid var(--grid, var(--line));
+  background: rgba(4, 13, 16, .98);
+  font-family: var(--mono, var(--font-mono));
+}
+
+.pen-header-brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+  color: var(--text);
+  font: 700 8.5px/1 var(--mono, var(--font-mono));
+  letter-spacing: .07em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pen-header-brand b,
+.pen-header-brand .brand-mark {
+  color: var(--lime, var(--accent-2));
+}
+
+.pen-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  gap: 4px;
+}
+
+.pen-header-action {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid var(--grid, var(--line));
+  border-radius: 0;
+  background: rgba(6, 18, 21, .65);
+  color: #86aaa6;
+  font: 700 8.5px/1 var(--mono, var(--font-mono));
+  letter-spacing: .035em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
+}
+
+.pen-header-action:hover,
+.pen-header-action:focus-visible,
+.pen-header-action[aria-current="true"],
+.pen-header-action.active {
+  border-color: var(--cyan, var(--accent));
+  color: var(--text);
+  background: rgba(11, 31, 34, .82);
+}
+
+.pen-header-action.is-primary {
+  border-color: color-mix(in srgb, var(--lime, var(--accent-2)) 45%, var(--grid, var(--line)));
+  color: var(--lime, var(--accent-2));
+}
+
+html[data-theme="light"] .pen-header {
+  background: rgba(247, 250, 247, .92);
+}
+
+html[data-theme="light"] .pen-header-action {
+  background: rgba(255, 255, 255, .58);
+  color: #52706a;
+}
+
+html[data-theme="light"] .pen-header-action:hover,
+html[data-theme="light"] .pen-header-action:focus-visible,
+html[data-theme="light"] .pen-header-action[aria-current="true"],
+html[data-theme="light"] .pen-header-action.active {
+  color: #173a34;
+  background: rgba(255, 255, 255, .88);
+}
+
+
+.hud.pen-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  position: fixed;
+}
+.hud.pen-header .hud-left,
+.hud.pen-header .hud-controls {
+  position: relative;
+  z-index: 2;
+}
+.hud.pen-header .hud-location {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: max-content;
+  max-width: min(320px, 28vw);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+.hud.pen-header .hud-location > span:not(.status-dot),
+.hud.pen-header .hud-location > small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hud-desktop-resume { margin-left: 2px; }
+.hud-mobile-resume.pen-header-action { display: none; }
+@media (max-width: 1180px) and (min-width: 901px) {
+  .hud.pen-header .hud-location { max-width: 180px; }
+  .hud.pen-header .hud-location > span:not(.status-dot) { font-size: 7px; }
+  .hud.pen-header .hud-location > small { font-size: 6px; }
+  .hud-desktop-resume { padding-inline: 8px; }
+}
+@media (hover: none) and (pointer: coarse) {
+  .hud.pen-header { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .hud-desktop-resume { display: none !important; }
+  .hud-left .hud-mobile-resume.pen-header-action { display: inline-flex; }
+}

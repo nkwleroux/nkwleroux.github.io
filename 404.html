@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <noscript><meta http-equiv="refresh" content="0; url=nojs.html" /></noscript>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#050f12" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="robots" content="noindex" />
+  <title>404 // PEN Lost Packet</title>
+  <link rel="stylesheet" href="/src/styles/index.css" />
+  <link rel="stylesheet" href="/src/styles/not-found.css" />
+</head>
+<body class="not-found-page">
+  <main class="not-found-shell" id="not-found-shell">
+    <div class="not-found-grid" aria-hidden="true"></div>
+    <div class="not-found-scan" aria-hidden="true"></div>
+    <div class="not-found-glow glow-a" aria-hidden="true"></div>
+    <div class="not-found-glow glow-b" aria-hidden="true"></div>
+
+    <header class="not-found-hud">
+      <div class="not-found-hud-left">
+        <div class="preference-controls not-found-preferences">
+          <div class="theme-switch" data-theme-switch role="group" aria-label="Color theme">
+            <button class="theme-option theme-option-light" data-theme-option="light" type="button" aria-label="Use light mode" title="Light mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 2.5v2.1M12 19.4v2.1M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2.1M19.4 12h2.1M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5"></path></svg></button>
+            <button class="theme-option theme-option-dark" data-theme-option="dark" type="button" aria-label="Use dark mode" title="Dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.6 15.2A8 8 0 0 1 8.8 4.4 8.25 8.25 0 1 0 19.6 15.2Z"></path></svg></button>
+            <span class="theme-switch-thumb" aria-hidden="true"></span>
+          </div>
+          <label class="language-control"><span class="visually-hidden">Language</span><select data-language-select aria-label="Language"><option value="en">EN</option><option value="es">ES</option><option value="nl">NL</option></select><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg></label>
+        </div>
+        <a class="not-found-brand" href="/"><b>PEN</b><span>//ROUTE RECOVERY</span></a>
+      </div>
+      <div class="not-found-hud-center"><i></i><span id="route-status">LOST PACKET DETECTED</span></div>
+      <div class="not-found-hud-right"><span>ERR:// 404</span><b id="route-clock">00:00:00</b></div>
+    </header>
+
+    <section class="recovery-stage" id="recovery-stage" aria-labelledby="not-found-title">
+      <div class="recovery-ghost-code" aria-hidden="true">
+        <span>ROUTE_TABLE::MISS</span>
+        <span>NODE_LOOKUP::NULL</span>
+        <span>RECOVERY_PATHS::02</span>
+      </div>
+
+      <div class="recovery-404" aria-hidden="true">
+        <span data-digit="4">4</span><span data-digit="0">0</span><span data-digit="4">4</span>
+      </div>
+
+      <svg class="recovery-links" id="recovery-links" viewBox="0 0 1200 720" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="routeCyan" x1="0" x2="1">
+            <stop offset="0" stop-color="#5ef1e0" stop-opacity=".12" />
+            <stop offset="1" stop-color="#5ef1e0" stop-opacity=".86" />
+          </linearGradient>
+          <linearGradient id="routeLime" x1="0" x2="1">
+            <stop offset="0" stop-color="#b7ff4a" stop-opacity=".86" />
+            <stop offset="1" stop-color="#b7ff4a" stop-opacity=".12" />
+          </linearGradient>
+        </defs>
+        <path class="recovery-link link-entry" id="link-entry" d="M600 360 C475 360 345 360 190 360" />
+        <path class="recovery-link link-resume" id="link-resume" d="M600 360 C725 360 855 360 1010 360" />
+        <path class="recovery-link link-dead" d="M600 360 C600 475 600 560 600 670" />
+      </svg>
+
+      <a class="recovery-node recovery-entry" data-recovery="entry" href="/" aria-label="Return to PEN portfolio">
+        <span>00</span>
+        <div><small>VALID NODE</small><b>ENTRY</b><em>RETURN TO PEN</em></div>
+        <i></i>
+      </a>
+
+      <a class="recovery-node recovery-resume" data-recovery="resume" href="/resume.html" aria-label="Open resume">
+        <span>CV</span>
+        <div><small>VALID NODE</small><b>RESUME</b><em>OPEN DIRECTLY</em></div>
+        <i></i>
+      </a>
+
+      <div class="lost-packet-zone">
+        <button class="lost-packet" id="lost-packet" type="button" aria-label="Lost NLR packet. Move with WASD, or drag toward a valid recovery node.">
+          <span>NLR</span>
+          <i></i>
+        </button>
+        <div class="packet-crosshair" aria-hidden="true"></div>
+        <p id="packet-instruction">DRAG OR USE WASD TO ROUTE THE PACKET</p>
+      </div>
+
+      <article class="recovery-copy">
+        <p class="recovery-kicker">PEN // NETWORK EXCEPTION</p>
+        <h1 id="not-found-title">SIGNAL <em>LOST.</em></h1>
+        <p>The requested coordinate is outside the authored expedition. Two recovery routes are still online.</p>
+      </article>
+
+      <div class="recovery-readout" aria-hidden="true">
+        <div><span>REQUEST</span><b id="requested-path">/UNKNOWN</b></div>
+        <div><span>PACKET</span><b id="packet-state">UNROUTED</b></div>
+        <div><span>RECOVERY</span><b>02 NODES ONLINE</b></div>
+      </div>
+    </section>
+
+    <footer class="not-found-footer">
+      <span>STATUS:// LOST_SIGNAL</span>
+      <span>MOVE PACKET → RECOVER ROUTE</span>
+      <span>PEN NETWORK // NICHOLAS LE ROUX</span>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { applyStoredTheme, installThemeControls } from "/src/core/theme.js";
+    import { applyStoredLanguage, installLanguageControls } from "/src/core/language.js";
+
+    applyStoredTheme();
+    applyStoredLanguage();
+    installThemeControls();
+    installLanguageControls();
+
+    const html = document.documentElement;
+    const shell = document.querySelector("#not-found-shell");
+    const stage = document.querySelector("#recovery-stage");
+    const packet = document.querySelector("#lost-packet");
+    const status = document.querySelector("#route-status");
+    const packetState = document.querySelector("#packet-state");
+    const requestedPath = document.querySelector("#requested-path");
+    const clock = document.querySelector("#route-clock");
+    const instruction = document.querySelector("#packet-instruction");
+    const targets = Array.from(document.querySelectorAll("[data-recovery].recovery-node"));
+    const recoveryLinks = Array.from(document.querySelectorAll("a[data-recovery]"));
+    const finePointer = matchMedia("(pointer:fine)").matches;
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const redirectedFrom = new URLSearchParams(location.search).get("from");
+    const routePath = redirectedFrom || `${location.pathname}${location.search}`;
+    requestedPath.textContent = routePath.length > 26 ? `${routePath.slice(0, 23)}…` : routePath;
+
+    const updateClock = () => {
+      const now = new Date();
+      clock.textContent = [now.getHours(), now.getMinutes(), now.getSeconds()]
+        .map((value) => String(value).padStart(2, "0"))
+        .join(":");
+    };
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    let navigationPending = false;
+    const packetPosition = { x: 0, y: 0 };
+    const pressedKeys = new Set();
+    let activeRecoveryTarget = null;
+    let drag = null;
+    let lastMoveFrame = performance.now();
+
+    const clearHot = () => {
+      targets.forEach((target) => target.classList.remove("is-hot"));
+      document.querySelectorAll(".recovery-link").forEach((link) => link.classList.remove("is-hot"));
+    };
+
+    const setHot = (target) => {
+      clearHot();
+      if (!target) return;
+      target.classList.add("is-hot");
+      document.querySelector(`#link-${target.dataset.recovery}`)?.classList.add("is-hot");
+      status.textContent = `RECOVERY NODE IN RANGE // ${target.dataset.recovery.toUpperCase()}`;
+    };
+
+    const applyPacketPosition = () => {
+      packet.style.setProperty("--packet-x", `${packetPosition.x}px`);
+      packet.style.setProperty("--packet-y", `${packetPosition.y}px`);
+    };
+
+    const clampPacketPosition = () => {
+      const rect = stage.getBoundingClientRect();
+      packetPosition.x = Math.max(-rect.width * .40, Math.min(rect.width * .40, packetPosition.x));
+      packetPosition.y = Math.max(-rect.height * .34, Math.min(rect.height * .34, packetPosition.y));
+    };
+
+    const updateRecoveryRange = () => {
+      const packetRect = packet.getBoundingClientRect();
+      const px = packetRect.left + packetRect.width / 2;
+      const py = packetRect.top + packetRect.height / 2;
+      let nearest = null;
+      let nearestDistance = Infinity;
+
+      targets.forEach((target) => {
+        const rect = target.getBoundingClientRect();
+        const distance = Math.hypot(px - (rect.left + rect.width / 2), py - (rect.top + rect.height / 2));
+        if (distance < nearestDistance) {
+          nearest = target;
+          nearestDistance = distance;
+        }
+      });
+
+      activeRecoveryTarget = nearestDistance < 150 ? nearest : null;
+      setHot(activeRecoveryTarget);
+      if (!activeRecoveryTarget && (pressedKeys.size > 0 || drag)) status.textContent = "ROUTE SEARCH ACTIVE";
+    };
+
+    const resetRecoveredState = () => {
+      navigationPending = false;
+      shell.classList.remove("route-recovered");
+      packet.classList.remove("is-dragging", "is-returning");
+      pressedKeys.clear();
+      drag = null;
+      packetPosition.x = 0;
+      packetPosition.y = 0;
+      packetState.textContent = "UNROUTED";
+      status.textContent = "LOST PACKET DETECTED";
+      clearHot();
+      applyPacketPosition();
+    };
+
+    window.addEventListener("pageshow", resetRecoveredState);
+
+    const recover = (href, label) => {
+      if (navigationPending) return;
+      navigationPending = true;
+      pressedKeys.clear();
+      shell.classList.add("route-recovered");
+      status.textContent = `ROUTE RECOVERED // ${label.toUpperCase()}`;
+      packetState.textContent = "ROUTED";
+      if (reducedMotion) {
+        location.href = href;
+        return;
+      }
+      setTimeout(() => { location.href = href; }, 560);
+    };
+
+    recoveryLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        recover(link.href, link.dataset.recovery || "entry");
+      });
+    });
+
+    targets.forEach((target) => {
+      target.addEventListener("pointerenter", () => {
+        if (!drag && pressedKeys.size === 0) setHot(target);
+      });
+      target.addEventListener("pointerleave", () => {
+        if (!drag && pressedKeys.size === 0) {
+          clearHot();
+          status.textContent = "LOST PACKET DETECTED";
+        }
+      });
+    });
+
+    const movementKeys = new Set(["w", "a", "s", "d"]);
+    document.addEventListener("keydown", (event) => {
+      const key = event.key.toLowerCase();
+      if (movementKeys.has(key)) {
+        event.preventDefault();
+        pressedKeys.add(key);
+        packetState.textContent = "MOVING";
+        status.textContent = "ROUTE SEARCH ACTIVE";
+        return;
+      }
+      if ((event.key === "Enter" || event.key === " ") && document.activeElement === packet) {
+        event.preventDefault();
+        if (activeRecoveryTarget) recover(activeRecoveryTarget.href, activeRecoveryTarget.dataset.recovery || "entry");
+      }
+    });
+
+    document.addEventListener("keyup", (event) => {
+      const key = event.key.toLowerCase();
+      if (!movementKeys.has(key)) return;
+      pressedKeys.delete(key);
+      if (pressedKeys.size === 0 && !activeRecoveryTarget) {
+        packetState.textContent = "UNROUTED";
+        status.textContent = "LOST PACKET DETECTED";
+      }
+    });
+
+    const movePacket = (now) => {
+      const dt = Math.min(2, (now - lastMoveFrame) / 16.67);
+      lastMoveFrame = now;
+      if (!navigationPending && !drag && pressedKeys.size > 0) {
+        const speed = 8.5 * dt;
+        let dx = 0;
+        let dy = 0;
+        if (pressedKeys.has("d")) dx += speed;
+        if (pressedKeys.has("a")) dx -= speed;
+        if (pressedKeys.has("s")) dy += speed;
+        if (pressedKeys.has("w")) dy -= speed;
+        const length = Math.hypot(dx, dy);
+        if (length > speed) {
+          dx = dx / length * speed;
+          dy = dy / length * speed;
+        }
+        packetPosition.x += dx;
+        packetPosition.y += dy;
+        clampPacketPosition();
+        applyPacketPosition();
+        updateRecoveryRange();
+      }
+      requestAnimationFrame(movePacket);
+    };
+    requestAnimationFrame(movePacket);
+
+    if (finePointer) {
+      packet.addEventListener("pointerdown", (event) => {
+        if (navigationPending || event.button !== 0) return;
+        event.preventDefault();
+        packet.setPointerCapture(event.pointerId);
+        drag = {
+          pointerId: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          baseX: packetPosition.x,
+          baseY: packetPosition.y,
+        };
+        pressedKeys.clear();
+        packet.classList.add("is-dragging");
+        packetState.textContent = "MOVING";
+        status.textContent = "ROUTE SEARCH ACTIVE";
+      });
+
+      packet.addEventListener("pointermove", (event) => {
+        if (!drag || drag.pointerId !== event.pointerId) return;
+        packetPosition.x = drag.baseX + event.clientX - drag.startX;
+        packetPosition.y = drag.baseY + event.clientY - drag.startY;
+        clampPacketPosition();
+        applyPacketPosition();
+        updateRecoveryRange();
+      });
+
+      const endDrag = (event) => {
+        if (!drag || drag.pointerId !== event.pointerId) return;
+        packet.classList.remove("is-dragging");
+        try { packet.releasePointerCapture(event.pointerId); } catch {}
+        drag = null;
+
+        if (activeRecoveryTarget) {
+          recover(activeRecoveryTarget.href, activeRecoveryTarget.dataset.recovery || "entry");
+          return;
+        }
+        packetState.textContent = "UNROUTED";
+        status.textContent = "LOST PACKET DETECTED";
+        clearHot();
+      };
+
+      packet.addEventListener("pointerup", endDrag);
+      packet.addEventListener("pointercancel", endDrag);
+
+      stage.addEventListener("pointermove", (event) => {
+        const rect = stage.getBoundingClientRect();
+        stage.style.setProperty("--mx", (((event.clientX - rect.left) / rect.width) - .5).toFixed(3));
+        stage.style.setProperty("--my", (((event.clientY - rect.top) / rect.height) - .5).toFixed(3));
+      });
+    } else {
+      instruction.textContent = "USE WASD OR TAP A VALID NODE";
+    }
+  </script>
+</body>
+</html>

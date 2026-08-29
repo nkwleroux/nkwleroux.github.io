@@ -1,0 +1,15 @@
+export const siteConfig = {
+  name: "Nicholas Le Roux",
+  role: "Embedded Software Engineer",
+  location: "Rotterdam, Netherlands",
+  email: "wmailnkwlr09@gmail.com",
+  contactFormEnabled: true,
+  githubUrl: "https://github.com/nkwleroux",
+  linkedInUrl: "https://www.linkedin.com/in/nicholas-lr/",
+  portfolioUrl: "https://nkwleroux.github.io/",
+  portfolioSourceUrl: "https://github.com/nkwleroux/nkwleroux.github.io",
+  marriageDate: "2025-04-30",
+  childrenBirthYear: 2025,
+  childrenCount: 2,
+  currentYear: new Date().getFullYear(),
+} as const;

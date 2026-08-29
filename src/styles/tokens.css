@@ -1,0 +1,20 @@
+:root {
+  --bg: #050f12;
+  --bg-elevated: #07161a;
+  --panel: rgba(5, 15, 18, 0.93);
+  --text: #dceceb;
+  --muted: #71918d;
+  --grid: #234843;
+  --grid-soft: #132d2a;
+  --cyan: #5ef1e0;
+  --lime: #b7ff4a;
+  --physical: #5ef1e0;
+  --application: #7b8cff;
+  --space-star: #5ef1e0;
+  --space-accent: #b7ff4a;
+  --space-violet: #7b8cff;
+  --space-line: #34766f;
+  --hud-h: 58px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}

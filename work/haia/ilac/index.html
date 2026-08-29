@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <noscript><meta http-equiv="refresh" content="0; url=../../../nojs.html" /></noscript>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A compatibility bridge between the OpenRetailing Price Pole API Collections and installed IFSF LON Price Pole equipment." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://nkwleroux.github.io/work/haia/ilac/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nkwleroux.github.io/work/haia/ilac/" />
+  <meta property="og:title" content="ILAC — IFSF LON API Converter // PEN" />
+  <meta property="og:description" content="A compatibility bridge between the OpenRetailing Price Pole API Collections and installed IFSF LON Price Pole equipment." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ILAC — IFSF LON API Converter // PEN" />
+  <meta name="twitter:description" content="A compatibility bridge between the OpenRetailing Price Pole API Collections and installed IFSF LON Price Pole equipment." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <title>ILAC — IFSF LON API Converter // PEN</title>
+  <link rel="stylesheet" href="/src/styles/routes.css" />
+</head>
+<body>
+  <a class="route-skip" href="#content">Skip to content</a>
+  <header class="route-header">
+    <a class="route-brand" href="/"><b>PEN</b><span>// SHAREABLE ROUTE</span></a>
+    <nav class="route-nav" aria-label="Portfolio navigation"><a href="/contact/">CONTACT</a></nav>
+    <div class="route-preferences" data-route-preferences="page"></div>
+  </header>
+  <main class="route-shell" id="content">
+    <section class="route-hero route-hero-single"><div><p class="route-eyebrow">PROFESSIONAL CASE STUDY / POC</p><h1>ILAC — IFSF LON API Converter</h1><p class="route-summary">A compatibility bridge between the OpenRetailing Price Pole API Collections and installed IFSF LON Price Pole equipment.</p><div class="route-actions"><a class="route-button primary" href="/resume.html#publications">PUBLICATIONS IN RESUME</a><a class="route-button secondary" href="/work/haia/">HAIA WORK</a></div></div></section>
+    <section class="route-section"><span>01 / PROBLEM</span><h2>Modern API clients, installed legacy OT</h2><p>Forecourt environments can contain installed Price Pole equipment built around IFSF LON while newer systems expose REST-based OpenRetailing Price Pole APIs. The engineering problem is translating between endpoint-oriented API resources and the IFSF database/message model without forcing immediate field replacement.</p></section><section class="route-section"><span>02 / CONSTRAINTS</span><h2>C++11 · legacy drivers · 32-bit Windows · binary protocol structures</h2><p>The system must preserve compatibility with established field hardware and legacy development constraints while handling acknowledgements, responses, binary data formats, simulator validation, and portability work.</p></section><section class="route-section"><span>03 / MY OWNERSHIP</span><h2>Lead developer, architect, and primary technical decision-maker</h2><p>ILAC began as my Haia internship project and continued after the internship. A second developer joined in 2026 under my supervision. I now lead the two-person team, designed the architecture, remain the main developer, and make the primary technical decisions across the REST/Oat++ boundary, IFSF message handling, conversion logic, concurrency, response processing, and validation.</p></section><section class="route-section"><span>04 / ENGINEERING DECISIONS</span><h2>Preserve OT behind a modern API boundary</h2><p>ILAC isolates conversion responsibility rather than requiring installed equipment to be replaced. The architecture preserves the existing C++11/legacy environment while exposing a modern REST-facing boundary.</p></section><section class="route-section"><span>05 / ARCHITECTURE</span><h2>OpenRetailing Price Pole APIs → REST/HTTP → ILAC → IFSF messages → LonTalk / TP/FT-10 → Price Pole</h2><p>Oat++ exposes the HTTP boundary; ILAC maps API resources to IFSF Database Address (DB_Ad) + Data Identifier (Data_Id) operations, sends the corresponding application messages over LonTalk / TP/FT-10, and converts responses back into API data.</p><div class="route-architecture"><div><b>01 / CLIENT</b><small>OpenRetailing Price Pole API request</small></div><div><b>02 / HTTP</b><small>REST / Oat++ boundary</small></div><div><b>03 / CONVERTER</b><small>ILAC message mapping + conversion</small></div><div><b>04 / FIELD BUS</b><small>LonTalk over TP/FT-10</small></div><div><b>05 / DEVICE</b><small>Installed IFSF Price Pole equipment</small></div></div></section><section class="route-section"><span>06 / STANDARDS BASIS</span><h2>Price Pole APIs mapped to IFSF database and message semantics</h2><p>Engineering Bulletin No. 27 documents the same conversion domain: OpenRetailing Price Pole API Collections v1.0 mapped to IFSF Part 3-02 Price Pole Application v1.24 and Part 2-01 Communications over LonWorks v1.93. In that model, REST GET operations typically map to Read → Answer and REST POST/update operations to Write → Acknowledge. IFSF data is addressed using DB_Ad + Data_Id, while Engineering Bulletin No. 11 defines common encodings such as UNIT_PRICE = bin8 + bcd6.</p><div class="route-architecture"><div><b>API MODEL</b><small>PDCA Common · PDCA Price Poles · PDCA Utilities · Price Poles API</small></div><div><b>ADDRESSING</b><small>DB_Ad + Data_Id</small></div><div><b>READ PATH</b><small>GET → Read → Answer / ACK</small></div><div><b>WRITE PATH</b><small>POST/update → Write → Acknowledge</small></div><div><b>FIELD FORMAT</b><small>EB11 common formats · e.g. UNIT_PRICE bin8 + bcd6</small></div></div></section><section class="route-section"><span>07 / OUTCOME</span><h2>Working Group proof-of-concept demonstration</h2><p>The proof of concept demonstrated a practical modernization path between modern APIs and installed legacy OT. IFSF Engineering Bulletin No. 27 documents the same standards-conversion domain and was solely authored by Nicholas Le Roux.</p></section>
+  <section class="route-section"><span>08 / EVIDENCE</span><div class="route-proof"><article><strong>POC</strong><span>Demonstrated to the IFSF Working Group</span></article><article><strong>#27</strong><span>Connected IFSF Engineering Bulletin</span></article><article><strong>C++</strong><span>REST ↔ industrial protocol conversion</span></article></div></section></main>
+  <footer class="route-footer"><span>PEN // SEMANTIC ROUTE</span><a href="https://github.com/nkwleroux/nkwleroux.github.io" target="_blank" rel="noopener noreferrer">SOURCE ↗</a></footer>
+  <script type="module" src="/src/route.ts"></script>
+</body>
+</html>

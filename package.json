@@ -1,0 +1,19 @@
+{
+  "name": "PEN-Portfolio-Expedition-Nicholas",
+  "version": "1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "node tools/portfolio.mjs dev",
+    "typecheck": "node tools/portfolio.mjs typecheck",
+    "build": "node tools/portfolio.mjs build",
+    "preview": "node tools/portfolio.mjs preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vite": "8.2.1"
+  }
+}
